@@ -86,6 +86,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.7
         version: 1.2.7(@types/react-dom@19.1.5(@types/react@19.1.6))(@types/react@19.1.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@tanstack/query-core':
+        specifier: ^5.79.2
+        version: 5.79.2
       '@tanstack/react-query':
         specifier: ^5.79.0
         version: 5.79.0(react@19.1.0)
@@ -116,12 +119,18 @@ importers:
       jotai:
         specifier: ^2.12.5
         version: 2.12.5(@types/react@19.1.6)(react@19.1.0)
+      jotai-tanstack-query:
+        specifier: ^0.9.0
+        version: 0.9.0(@tanstack/query-core@5.79.2)(jotai@2.12.5(@types/react@19.1.6)(react@19.1.0))
       langchain:
         specifier: ^0.3.27
         version: 0.3.27(@langchain/core@0.3.57(openai@4.104.0(ws@8.18.2)(zod@3.25.42)))(openai@4.104.0(ws@8.18.2)(zod@3.25.42))(ws@8.18.2)
       lucide-react:
         specifier: ^0.511.0
         version: 0.511.0(react@19.1.0)
+      nanoid:
+        specifier: ^5.1.5
+        version: 5.1.5
       next:
         specifier: 15.3.3
         version: 15.3.3(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1557,6 +1566,9 @@ packages:
   '@tanstack/query-core@5.79.0':
     resolution: {integrity: sha512-s+epTqqLM0/TbJzMAK7OEhZIzh63P9sWz5HEFc5XHL4FvKQXQkcjI8F3nee+H/xVVn7mrP610nVXwOytTSYd0w==}
 
+  '@tanstack/query-core@5.79.2':
+    resolution: {integrity: sha512-kr+KQrBuqd6495eP9S41BoftFI1H50XA9O+6FmbnTx/Te6bjiq1mj8rt9rJjW3YZSO2aaUNUres0TWesJW1j1g==}
+
   '@tanstack/react-query@5.79.0':
     resolution: {integrity: sha512-DjC4JIYZnYzxaTzbg3osOU63VNLP67dOrWet2cZvXgmgwAXNxfS52AMq86M5++ILuzW+BqTUEVMTjhrZ7/XBuA==}
     peerDependencies:
@@ -2664,6 +2676,12 @@ packages:
     resolution: {integrity: sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==}
     hasBin: true
 
+  jotai-tanstack-query@0.9.0:
+    resolution: {integrity: sha512-8n7/xV14+ZE63dyqngtmqs6aV1bNnQJF9bJN5Bj70USc2cMFRmsVhGGzL1cSvp5E/xXasU37czFFaZ0vavmyfA==}
+    peerDependencies:
+      '@tanstack/query-core': '*'
+      jotai: '>=2.0.0'
+
   jotai@2.12.5:
     resolution: {integrity: sha512-G8m32HW3lSmcz/4mbqx0hgJIQ0ekndKWiYP7kWVKi0p6saLXdSoye+FZiOFyonnd7Q482LCzm8sMDl7Ar1NWDw==}
     engines: {node: '>=12.20.0'}
@@ -2956,6 +2974,11 @@ packages:
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
+  nanoid@5.1.5:
+    resolution: {integrity: sha512-Ir/+ZpE9fDsNH0hQ3C68uyThDXzYcim2EqcZ8zn8Chtt1iylPT9xXJB0kPCnqzgcEGikO9RxSrh63MsmVCU7Fw==}
+    engines: {node: ^18 || >=20}
     hasBin: true
 
   napi-postinstall@0.2.4:
@@ -4823,6 +4846,8 @@ snapshots:
 
   '@tanstack/query-core@5.79.0': {}
 
+  '@tanstack/query-core@5.79.2': {}
+
   '@tanstack/react-query@5.79.0(react@19.1.0)':
     dependencies:
       '@tanstack/query-core': 5.79.0
@@ -6051,6 +6076,11 @@ snapshots:
 
   jiti@2.4.2: {}
 
+  jotai-tanstack-query@0.9.0(@tanstack/query-core@5.79.2)(jotai@2.12.5(@types/react@19.1.6)(react@19.1.0)):
+    dependencies:
+      '@tanstack/query-core': 5.79.2
+      jotai: 2.12.5(@types/react@19.1.6)(react@19.1.0)
+
   jotai@2.12.5(@types/react@19.1.6)(react@19.1.0):
     optionalDependencies:
       '@types/react': 19.1.6
@@ -6270,6 +6300,8 @@ snapshots:
   mustache@4.2.0: {}
 
   nanoid@3.3.11: {}
+
+  nanoid@5.1.5: {}
 
   napi-postinstall@0.2.4: {}
 

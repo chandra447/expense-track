@@ -5,6 +5,7 @@ import { tagRoute } from './tags'
 import { creditsRoute } from './credits'
 import { openaiRoute } from './openai'
 import { chatRoute } from './chat'
+import { threadsRoute } from './threads'
 import { logger } from "hono/logger";
 import { clerkMiddleware } from '@hono/clerk-auth'
 
@@ -29,7 +30,8 @@ const apiRoutes = app
   .route("/tags", tagRoute)
   .route("/credits", creditsRoute)
   .route("/openai", openaiRoute)
-  .route("/chat", chatRoute);
+  .route("/chat", chatRoute)
+  .route("/threads", threadsRoute);
 
 export type ApiRoutes = typeof apiRoutes;
 
