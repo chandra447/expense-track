@@ -2,6 +2,9 @@ import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import { expenseRoute } from './expenses'
 import { tagRoute } from './tags'
+import { creditsRoute } from './credits'
+import { openaiRoute } from './openai'
+import { chatRoute } from './chat'
 import { logger } from "hono/logger";
 import { clerkMiddleware } from '@hono/clerk-auth'
 
@@ -21,7 +24,12 @@ app.get('/health', (c) => {
   return c.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
 
-const apiRoutes = app.route("/expenses", expenseRoute).route("/tags", tagRoute);
+const apiRoutes = app
+  .route("/expenses", expenseRoute)
+  .route("/tags", tagRoute)
+  .route("/credits", creditsRoute)
+  .route("/openai", openaiRoute)
+  .route("/chat", chatRoute);
 
 export type ApiRoutes = typeof apiRoutes;
 

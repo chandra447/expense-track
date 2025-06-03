@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link"
-import { BadgeDollarSign, LayoutDashboard, Settings, PlusCircle, BarChart3 } from "lucide-react"
+import { BadgeDollarSign, LayoutDashboard, Settings, PlusCircle, BarChart3, Brain } from "lucide-react"
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import { Button } from './ui/button'
 import { UserDropdown } from './user-dropdown'
@@ -27,6 +27,14 @@ export function Navbar(){
                                 >
                                     <LayoutDashboard className="h-4 w-4" />
                                     <span>Dashboard</span>
+                                </Link>
+                                
+                                <Link 
+                                    href="/ai-chat" 
+                                    className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                                >
+                                    <Brain className="h-4 w-4" />
+                                    <span>AI Chat</span>
                                 </Link>
                                 
                                 <Link 
@@ -77,6 +85,13 @@ export function Navbar(){
                             >
                                 <LayoutDashboard className="h-4 w-4" />
                                 <span>Dashboard</span>
+                            </Link>
+                            <Link 
+                                href="/ai-chat" 
+                                className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                            >
+                                <Brain className="h-4 w-4" />
+                                <span>AI Chat</span>
                             </Link>
                             <Link 
                                 href="/expenses" 

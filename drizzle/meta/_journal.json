@@ -15,6 +15,13 @@
       "when": 1748912504424,
       "tag": "0001_tearful_mindworm",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1748930097589,
+      "tag": "0002_marvelous_vindicator",
+      "breakpoints": true
     }
   ]
 }
