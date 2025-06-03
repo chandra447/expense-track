@@ -1,16 +1,12 @@
 "use client";
 
 import Link from "next/link"
-import { BadgeDollarSign, LayoutDashboard, Settings, PlusCircle, BarChart3, Brain, Bot } from "lucide-react"
+import { BadgeDollarSign, LayoutDashboard, Settings, PlusCircle, BarChart3, Brain } from "lucide-react"
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import { Button } from './ui/button'
 import { UserDropdown } from './user-dropdown'
-import { cn } from '@/lib/utils'
-import { usePathname } from 'next/navigation'
 
 export function Navbar(){
-    const pathname = usePathname()
-
     return (
         <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto max-w-7xl px-4">
@@ -34,16 +30,11 @@ export function Navbar(){
                                 </Link>
                                 
                                 <Link 
-                                    href="/ai-chat"
-                                    className={cn(
-                                        "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                                        pathname === "/dashboard/ai-chat" 
-                                            ? "bg-primary text-primary-foreground" 
-                                            : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                                    )}
+                                    href="/ai-chat" 
+                                    className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
                                 >
-                                    <Bot className="h-4 w-4" />
-                                    AI Chat
+                                    <Brain className="h-4 w-4" />
+                                    <span>AI Chat</span>
                                 </Link>
                                 
                                 <Link 
@@ -96,16 +87,11 @@ export function Navbar(){
                                 <span>Dashboard</span>
                             </Link>
                             <Link 
-                                href="/dashboard/ai-chat"
-                                className={cn(
-                                    "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                                    pathname === "/dashboard/ai-chat" 
-                                        ? "bg-primary text-primary-foreground" 
-                                        : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                                )}
+                                href="/ai-chat" 
+                                className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
                             >
-                                <Bot className="h-4 w-4" />
-                                AI Chat
+                                <Brain className="h-4 w-4" />
+                                <span>AI Chat</span>
                             </Link>
                             <Link 
                                 href="/expenses" 
