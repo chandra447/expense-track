@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link"
-import { BadgeDollarSign, LayoutDashboard, Settings, PlusCircle, BarChart3, Brain } from "lucide-react"
+import { BadgeDollarSign, LayoutDashboard, PlusCircle, BarChart3, Brain } from "lucide-react"
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import { Button } from './ui/button'
 import { UserDropdown } from './user-dropdown'

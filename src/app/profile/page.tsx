@@ -23,6 +23,7 @@ import {
   Edit,
   Camera
 } from "lucide-react";
+import Image from "next/image";
 
 export default function ProfilePage() {
   const { user, isLoaded } = useAuth();
@@ -64,14 +65,6 @@ export default function ProfilePage() {
     return (amount / 100).toFixed(2);
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
   return (
     <main className="container mx-auto max-w-4xl p-4">
       <div className="space-y-6">
@@ -97,9 +90,11 @@ export default function ProfilePage() {
               <div className="flex items-center space-x-4">
                 <div className="relative">
                   {user.imageUrl ? (
-                    <img
+                    <Image
                       src={user.imageUrl}
                       alt={displayName}
+                      width={80}
+                      height={80}
                       className="h-20 w-20 rounded-full object-cover"
                     />
                   ) : (

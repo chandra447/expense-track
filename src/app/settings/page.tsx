@@ -9,7 +9,6 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { 
-  Settings, 
   Bell, 
   Shield, 
   Palette, 
@@ -31,7 +30,6 @@ export default function SettingsPage() {
   const [pushNotifications, setPushNotifications] = useState(false);
   const [weeklyReports, setWeeklyReports] = useState(true);
   const [monthlyReports, setMonthlyReports] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
 
   if (!isLoaded) {
     return (

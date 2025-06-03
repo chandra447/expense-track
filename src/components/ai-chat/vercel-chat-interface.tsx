@@ -1,16 +1,13 @@
 "use client";
 
 import { useChat } from '@ai-sdk/react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { 
   Bot, 
-  User, 
   Send, 
   Loader2, 
   Brain, 
@@ -22,11 +19,9 @@ import {
   StopCircle,
   Tag,
   Trash2,
-  ChevronDown,
-  ChevronRight,
-  Code
+  Code,
+  ChevronRight
 } from "lucide-react";
-import { useState } from "react";
 
 export function VercelChatInterface() {
   const { 
@@ -34,25 +29,12 @@ export function VercelChatInterface() {
     input, 
     handleInputChange, 
     handleSubmit, 
-    isLoading,
     status,
     stop,
     error 
   } = useChat({
     api: '/api/chat',
   });
-
-  const [expandedTools, setExpandedTools] = useState<Set<string>>(new Set());
-
-  const toggleToolExpansion = (toolCallId: string) => {
-    const newExpanded = new Set(expandedTools);
-    if (newExpanded.has(toolCallId)) {
-      newExpanded.delete(toolCallId);
-    } else {
-      newExpanded.add(toolCallId);
-    }
-    setExpandedTools(newExpanded);
-  };
 
   return (
     <div className="flex flex-col h-full max-w-4xl mx-auto relative">
@@ -79,7 +61,7 @@ export function VercelChatInterface() {
               <div className="text-center text-muted-foreground py-12">
                 <Bot className="h-8 w-8 mx-auto mb-3 opacity-50" />
                 <p className="text-sm">Start a conversation with your AI expense assistant!</p>
-                <p className="text-xs mt-1 opacity-75">Try: "Add $25 for groceries" or "Show my expense summary"</p>
+                <p className="text-xs mt-1 opacity-75">Try: &quot;Add $25 for groceries&quot; or &quot;Show my expense summary&quot;</p>
               </div>
             )}
             
@@ -178,7 +160,7 @@ export function VercelChatInterface() {
                       .filter(tool => tool.state === 'result')
                       .map(tool => {
                         if (tool.state === 'result' && 'result' in tool) {
-                          const result = tool.result as any;
+                          const result = tool.result as { message?: string };
                           return result?.message || null;
                         }
                         return null;
@@ -264,7 +246,7 @@ export function VercelChatInterface() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={() => handleInputChange({ target: { value: "Show me my expense summary" } } as any)}
+                  onClick={() => handleInputChange({ target: { value: "Show me my expense summary" } } as React.ChangeEvent<HTMLTextAreaElement>)}
                   disabled={status !== 'ready'}
                   className="h-7 px-2 text-xs rounded-lg hover:bg-muted"
                 >
@@ -275,7 +257,7 @@ export function VercelChatInterface() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={() => handleInputChange({ target: { value: "Add $15 for lunch" } } as any)}
+                  onClick={() => handleInputChange({ target: { value: "Add $15 for lunch" } } as React.ChangeEvent<HTMLTextAreaElement>)}
                   disabled={status !== 'ready'}
                   className="h-7 px-2 text-xs rounded-lg hover:bg-muted"
                 >
@@ -286,7 +268,7 @@ export function VercelChatInterface() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={() => handleInputChange({ target: { value: "Find expenses over $20" } } as any)}
+                  onClick={() => handleInputChange({ target: { value: "Find expenses over $20" } } as React.ChangeEvent<HTMLTextAreaElement>)}
                   disabled={status !== 'ready'}
                   className="h-7 px-2 text-xs rounded-lg hover:bg-muted"
                 >
@@ -297,7 +279,7 @@ export function VercelChatInterface() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={() => handleInputChange({ target: { value: "Give me insights for this month" } } as any)}
+                  onClick={() => handleInputChange({ target: { value: "Give me insights for this month" } } as React.ChangeEvent<HTMLTextAreaElement>)}
                   disabled={status !== 'ready'}
                   className="h-7 px-2 text-xs rounded-lg hover:bg-muted"
                 >

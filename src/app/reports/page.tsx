@@ -1,9 +1,9 @@
 "use client";
 
-import { useAuth } from "@/hooks/use-auth";
-import { useAtomValue, useSetAtom } from "jotai";
-import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { useEffect, useState, useMemo } from "react";
 import { DateRange } from "react-day-picker";
+import { useAtomValue, useSetAtom } from "jotai";
 import {
   expensesAtom,
   tagsAtom,
@@ -13,7 +13,6 @@ import {
   fetchTagsAtom,
   totalExpensesAtom,
   expensesCountAtom,
-  type Expense,
 } from "@/store/expenses";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -38,13 +37,6 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Popover,
   PopoverContent,
@@ -155,7 +147,7 @@ export default function ReportsPage() {
             }
           } else {
             // Handle numeric timestamps
-            let timestamp = expense.createdAt;
+            const timestamp = expense.createdAt;
             if (timestamp > 1700000000000 && timestamp < 1800000000000) {
               expenseDate = new Date(timestamp);
             } else if (timestamp > 1000000000) {
@@ -178,7 +170,7 @@ export default function ReportsPage() {
           
           const inRange = expenseDate >= fromDate && expenseDate <= toDate;
           return inRange;
-        } catch (error) {
+        } catch {
           return false;
         }
       });
@@ -258,7 +250,7 @@ export default function ReportsPage() {
                 }
               }
             } else {
-              let timestamp = expense.createdAt;
+              const timestamp = expense.createdAt;
               if (timestamp > 1700000000000 && timestamp < 1800000000000) {
                 expenseDate = new Date(timestamp);
               }
@@ -306,7 +298,7 @@ export default function ReportsPage() {
                   }
                 }
               } else {
-                let timestamp = expense.createdAt;
+                const timestamp = expense.createdAt;
                 if (timestamp > 1700000000000 && timestamp < 1800000000000) {
                   expenseDate = new Date(timestamp);
                 }
@@ -430,7 +422,7 @@ export default function ReportsPage() {
         }
       } else {
         // Handle numeric timestamps
-        let timestamp = dateString;
+        const timestamp = dateString;
         if (timestamp > 1700000000000 && timestamp < 1800000000000) {
           date = new Date(timestamp);
         } else if (timestamp > 1000000000) {
@@ -447,7 +439,7 @@ export default function ReportsPage() {
         day: 'numeric',
         year: 'numeric'
       });
-    } catch (error) {
+    } catch {
       return 'Invalid Date';
     }
   };

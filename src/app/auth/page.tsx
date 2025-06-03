@@ -54,8 +54,9 @@ export default function AuthPage() {
         await setActive({ session: result.createdSessionId });
         router.push('/dashboard');
       }
-    } catch (err: any) {
-      setError(err.errors?.[0]?.message || 'An error occurred during sign in');
+    } catch (err: unknown) {
+      const error = err as { errors?: Array<{ message: string }> };
+      setError(error.errors?.[0]?.message || 'An error occurred during sign in');
     } finally {
       setIsLoading(false);
     }
@@ -83,8 +84,9 @@ export default function AuthPage() {
         // Handle email verification if required
         setError('Please check your email for verification');
       }
-    } catch (err: any) {
-      setError(err.errors?.[0]?.message || 'An error occurred during sign up');
+    } catch (err: unknown) {
+      const error = err as { errors?: Array<{ message: string }> };
+      setError(error.errors?.[0]?.message || 'An error occurred during sign up');
     } finally {
       setIsLoading(false);
     }
@@ -100,8 +102,9 @@ export default function AuthPage() {
         redirectUrl: '/dashboard',
         redirectUrlComplete: '/dashboard'
       });
-    } catch (err: any) {
-      setError(err.errors?.[0]?.message || 'An error occurred with Google sign in');
+    } catch (err: unknown) {
+      const error = err as { errors?: Array<{ message: string }> };
+      setError(error.errors?.[0]?.message || 'An error occurred with Google sign in');
       setIsLoading(false);
     }
   };

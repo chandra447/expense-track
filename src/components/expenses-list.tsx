@@ -2,8 +2,9 @@
 
 import { useAuth } from "@/hooks/use-auth";
 import { useState, useEffect, useMemo } from "react";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { DateRange } from "react-day-picker";
+import { useRouter } from "next/navigation";
 import {
   expensesAtom,
   expensesLoadingAtom,
@@ -45,7 +46,7 @@ import {
   Tag, 
   AlertCircle, 
   Plus, 
-  Settings, 
+  Settings,
   Edit, 
   Trash2, 
   Calendar,
@@ -68,7 +69,7 @@ interface GroupedExpenses {
 
 export function ExpensesList() {
   const { isSignedIn, isLoaded } = useAuth();
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const router = useRouter();
 
   // Jotai atoms
   const expenses = useAtomValue(expensesAtom);
@@ -134,7 +135,7 @@ export function ExpensesList() {
             }
           } else {
             // Handle numeric timestamps
-            let timestamp = expense.createdAt;
+            const timestamp = expense.createdAt;
             if (timestamp > 1700000000000 && timestamp < 1800000000000) {
               expenseDate = new Date(timestamp);
             } else if (timestamp > 1000000000) {
@@ -187,7 +188,7 @@ export function ExpensesList() {
           }
         } else {
           // Handle numeric timestamps
-          let timestamp = expense.createdAt;
+          const timestamp = expense.createdAt;
           if (timestamp > 1700000000000 && timestamp < 1800000000000) {
             date = new Date(timestamp);
           } else if (timestamp > 1000000000) {
@@ -238,7 +239,7 @@ export function ExpensesList() {
                 }
               }
             } else {
-              let timestamp = dateString;
+              const timestamp = dateString;
               if (timestamp > 1700000000000 && timestamp < 1800000000000) {
                 date = new Date(timestamp);
               } else if (timestamp > 1000000000) {
@@ -322,7 +323,7 @@ export function ExpensesList() {
         }
       } else {
         // Handle numeric timestamps
-        let timestamp = dateString;
+        const timestamp = dateString;
         if (timestamp > 1700000000000 && timestamp < 1800000000000) {
           date = new Date(timestamp);
         } else if (timestamp > 1000000000) {
@@ -369,7 +370,7 @@ export function ExpensesList() {
           <DollarSign className="h-12 w-12 mx-auto mb-4 opacity-50" />
           <p className="text-lg font-medium mb-2">Sign in to view your expenses</p>
           <p className="text-sm mb-4">Track and manage your expenses securely</p>
-          <Button onClick={() => setIsAuthModalOpen(true)}>
+          <Button onClick={() => router.push('/auth')}>
             Sign In to Continue
           </Button>
         </div>

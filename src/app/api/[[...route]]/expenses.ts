@@ -5,7 +5,6 @@ import { expenses } from "@/db/schema/expenses";
 import {
   createExpenseWithTagsSchema,
   getExpenseByIdSchema,
-  updateExpenseSchema,
 } from "@/db/types/db_types";
 import { eq, and } from "drizzle-orm";
 import { getAuth } from "@hono/clerk-auth";
@@ -133,7 +132,12 @@ export const expenseRoute = new Hono()
       const { title, amount, tagIds, createdAt } = c.req.valid("json");
 
       // Use the authenticated user's ID instead of accepting it from the request
-      const expenseData: any = {
+      const expenseData: {
+        title: string;
+        amount: number;
+        userId: string;
+        createdAt?: string;
+      } = {
         title,
         amount, 
         userId: auth.userId, // Use authenticated user's ID
@@ -141,7 +145,7 @@ export const expenseRoute = new Hono()
 
       // If custom date is provided, use it; otherwise let DB set current timestamp
       if (createdAt) {
-        expenseData.createdAt = new Date(createdAt);
+        expenseData.createdAt = new Date(createdAt).toISOString();
       }
 
       const [newExpense] = await db
@@ -222,14 +226,18 @@ export const expenseRoute = new Hono()
       }
 
       // Update the expense
-      const updateData: any = {
+      const updateData: {
+        title: string;
+        amount: number;
+        createdAt?: string;
+      } = {
         title,
         amount,
       };
 
       // If custom date is provided, update it
       if (createdAt) {
-        updateData.createdAt = new Date(createdAt);
+        updateData.createdAt = new Date(createdAt).toISOString();
       }
 
       await db

@@ -1,20 +1,10 @@
 import { Hono } from "hono";
-import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { getAuth } from "@hono/clerk-auth";
 import { openai } from '@ai-sdk/openai';
 import { streamText, tool } from 'ai';
 import { expenseFunctions } from '@/lib/expense-functions';
 
-const chatRequestSchema = z.object({
-  messages: z.array(z.object({
-    id: z.string(),
-    role: z.enum(['user', 'assistant', 'system']),
-    content: z.string(),
-    createdAt: z.string().optional(),
-  }))
-});
-// zValidator("json", chatRequestSchema),
 export const chatRoute = new Hono()
   .post("/",  async (c) => {
     const auth = getAuth(c);
