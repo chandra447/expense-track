@@ -256,6 +256,29 @@ export const expenseFunctions = {
     }
   },
 
+  async getAllTags(userId: string) {
+    try {
+      const userTags = await db.select({
+        id: tags.id,
+        tagName: tags.tagName,
+        createdAt: tags.createdAt,
+      }).from(tags)
+        .where(eq(tags.userId, userId))
+        .orderBy(tags.tagName);
+
+      return {
+        success: true,
+        tags: userTags
+      };
+    } catch (error) {
+      console.error('Error getting tags:', error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      };
+    }
+  },
+
   async createTag(params: CreateTagParams) {
     const { userId, tagName } = params;
     

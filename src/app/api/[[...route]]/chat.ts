@@ -30,15 +30,20 @@ export const chatRoute = new Hono()
 
 Always be helpful and provide clear, concise responses. When creating expenses, try to extract meaningful information from user input like amount, description, and potential tags.
 
-IMPORTANT: Only specify a date when the user explicitly mentions a specific date. If no date is mentioned, let the system use the current timestamp automatically.`,
+IMPORTANT: Only specify a date when the user explicitly mentions a specific date. If no date is mentioned, let the system use the current timestamp automatically.
+
+TAG MANAGEMENT: 
+- When creating expenses with tags, the system will automatically check if each tag exists and use the existing tag, or create a new one if it doesn't exist. You don't need to manually check for existing tags when creating expenses.
+- Before creating standalone tags (using create_tag tool), ALWAYS check if a similar tag already exists by using the get_all_tags tool. If a tag with the same or similar name exists, inform the user about the existing tag instead of creating a duplicate.
+- This helps maintain a clean and organized tag system without duplicates.`,
         messages,
         tools: {
           create_expense: tool({
-            description: 'Create a new expense entry',
+            description: 'Create a new expense entry. Tags will be automatically handled - existing tags will be used, and new tags will be created if they don\'t exist.',
             parameters: z.object({
               title: z.string().describe('The expense title/description'),
               amount: z.number().describe('The expense amount in dollars'),
-              tagNames: z.array(z.string()).optional().describe('Optional array of tag names to associate with the expense'),
+              tagNames: z.array(z.string()).optional().describe('Optional array of tag names to associate with the expense. Existing tags will be used, new ones will be created automatically.'),
               date: z.string().optional().describe('Optional date in ISO format, only use when user explicitly mentions a specific date'),
             }),
             execute: async ({ title, amount, tagNames = [], date }) => {
@@ -67,6 +72,31 @@ IMPORTANT: Only specify a date when the user explicitly mentions a specific date
                 return {
                   success: false,
                   message: 'Failed to create expense. Please try again.',
+                  error: result.error
+                };
+              }
+            },
+          }),
+          get_all_tags: tool({
+            description: 'Get all existing tags for the user',
+            parameters: z.object({}),
+            execute: async () => {
+              const result = await expenseFunctions.getAllTags(auth.userId);
+
+              if (result.success && result.tags) {
+                return {
+                  success: true,
+                  tags: result.tags.map(tag => ({
+                    id: tag.id,
+                    name: tag.tagName,
+                    createdAt: tag.createdAt,
+                  })),
+                  message: `Found ${result.tags.length} existing tags.`
+                };
+              } else {
+                return {
+                  success: false,
+                  message: 'Failed to get tags. Please try again.',
                   error: result.error
                 };
               }
@@ -169,6 +199,17 @@ IMPORTANT: Only specify a date when the user explicitly mentions a specific date
                   }
                 };
               } else {
+                // If tag already exists, provide helpful message
+                if (result.error && result.error.includes('already exists')) {
+                  return {
+                    success: false,
+                    message: `Tag "${tagName}" already exists. You can use the existing tag when creating expenses.`,
+                    existingTag: result.tag ? {
+                      id: result.tag.id,
+                      name: result.tag.tagName,
+                    } : null
+                  };
+                }
                 return {
                   success: false,
                   message: result.error || 'Failed to create tag. Please try again.',
